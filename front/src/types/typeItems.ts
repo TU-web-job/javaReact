@@ -10,3 +10,11 @@ export type FooterType = {
     footerName: string,
     footerList: string[],
 }
+
+export type Diary = {
+    id: number;
+    title: string;
+    text: string;
+    date: string;
+    image: string;
+}
