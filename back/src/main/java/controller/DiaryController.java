@@ -12,8 +12,8 @@ public class DiaryController {
     }
 
     @GetMapping
-    public List<Diary> getDiaryList(){
-        return repo.findAll();
+    public List<Diary> getByDate(@RequstParam String date){
+        return repo.findByDate(date);
     }
 
     @PostMapping

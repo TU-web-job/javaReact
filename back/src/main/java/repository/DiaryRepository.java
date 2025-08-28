@@ -1,5 +1,5 @@
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface DiaryRepository extends MongoRepository<Diary, String> {
-    List<Diary> findByDiaryId(int diaryid);
+    List<Diary> findByDate(String date);
 }
