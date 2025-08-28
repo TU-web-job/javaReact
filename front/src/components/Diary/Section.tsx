@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import { Diary } from "../../types/typeItems";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import Image from "next/image";
 
 const Section = () => {
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-    const [diary, setDiary] = useSate<Diary[]>([]);
+    const [diary, setDiary] = useState<Diary[]>([]);
     const [showModal, setShowModal] = useState<"view" | "new" | null>(null);
     const [newDiary, setNewDiary] = useState<Omit<Diary,"id">>({
         title:"",
@@ -29,7 +30,7 @@ const Section = () => {
         const payload = {
             ...newDiary,
             date: selectedDate.toISOString().split("T")[0],
-        },
+        };
 
         const res = await fetch("/api/diary", {
             method: "POST",
@@ -49,8 +50,8 @@ const Section = () => {
 
     return(
         <div className="w-full p-4">
-            <h2 className="font-bold text-2xl">Pet's Diary Calendar</h2>
-            <Calendar onClickDay={handleDateClick} />
+            <h2 className="font-bold text-2xl mb-4">Pet's Diary Calendar</h2>
+            <Calendar onClickDay={handleDateClick} className="justify-center items-center"/>
 
             {showModal === "view" && selectedDate && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
@@ -65,9 +66,11 @@ const Section = () => {
                                     <p className="font-semibold">{item.title}</p>
                                     <p>Text : {item.text}</p>
                                     {item.image && (
-                                        <img src={item.image}
+                                        <Image src={item.image}
                                              alt="diaryImage"
-                                             className="w-full h-45 object-cover rounded-md mt-2"
+                                             className="object-cover rounded-md mt-2"
+                                             width={400}
+                                             height={300}
                                         />
                                     )}
                                 </div>

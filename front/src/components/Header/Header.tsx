@@ -1,9 +1,9 @@
 const Header = () => {
     return(
-        <header className="w-full h-[600px] mb-4 flex">
-            <h2 className="items-center justify-center text-4xl font-bold">My Pet's Diary</h2>
+        <header className="w-full h-[250px] mb-4 flex">
+            <h2 className="items-center justify-center text-4xl font-bold">My Pet&apos;s Diary</h2>
             <ul>
-                <li><a className="under-blue" src="#">Home</a></li>
+                <li><a>Home</a></li>
                 <li><a>About</a></li>
                 <li><a>Top</a></li>
             </ul>

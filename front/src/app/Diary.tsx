@@ -1,5 +1,8 @@
-import { Header } from '../components/Header';
-import { Section } from '../components/Section';
+"use client";
+import React from "react";
+
+import Header from "../components/Header/Header";
+import Section from "../components/Diary/Section";
 
 const Diary = () => {
     return(
@@ -10,4 +13,4 @@ const Diary = () => {
     );
 }
 
-default export Diary;
+export default Diary;
