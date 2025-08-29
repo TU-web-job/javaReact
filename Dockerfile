@@ -4,8 +4,7 @@ WORKDIR /front
 COPY ./front/package*.json ./
 RUN npm install
 COPY ./front/ ./
-RUN npm run build
-RUN npm run export   # out/フォルダ生成
+RUN npm run build  # out/フォルダ生成
 
 # 2. バックエンドのビルド
 FROM gradle:8.3-jdk17 AS backend-build
