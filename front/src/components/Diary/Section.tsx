@@ -19,7 +19,7 @@ const Section = () => {
         setSelectedDate(date);
         setShowModal("view");
 
-        const res = await fetch(`/api/diary=${date.toISOString().split("T")[0]}`);
+        const res = await fetch(`/api/diary?date=${date.toISOString().split("T")[0]}`);
         const data = await res.json();
         setDiary(data);
     };
@@ -57,7 +57,7 @@ const Section = () => {
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                     <div className="bg-white p-4 rounded-md w-96">
                         <h3 className="font-bold text-xl mb-4">
-                            {selectedDate.toLocaleDateString()}の日常
+                            {selectedDate && new Intl.DateTimeFormat("ja-JP").format(selectedDate)}の日常
                         </h3>
 
                         {diary.length > 0 ? (
