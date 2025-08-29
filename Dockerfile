@@ -7,7 +7,7 @@ COPY ./front/ ./
 RUN npm run build  # out/フォルダ生成
 
 # 2. バックエンドのビルド
-FROM gradle:8.3-jdk17 AS backend-build
+FROM eclipse-temurin:17-jdk AS backend-build
 WORKDIR /back
 # Gradle wrapper 関連ファイルのみコピー
 COPY ./back/ ./
