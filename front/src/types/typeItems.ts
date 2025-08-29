@@ -12,7 +12,7 @@ export type FooterType = {
 }
 
 export type Diary = {
-    id: number;
+    diaryId: number;
     title: string;
     text: string;
     date: string;

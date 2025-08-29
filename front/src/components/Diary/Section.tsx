@@ -12,7 +12,7 @@ const Section = () => {
     const [formattedDate, setFormattedDate] = useState<string>("");
     const [diary, setDiary] = useState<Diary[]>([]);
     const [showModal, setShowModal] = useState<"view" | "new" | null>(null);
-    const [newDiary, setNewDiary] = useState<Omit<Diary,"id">>({
+    const [newDiary, setNewDiary] = useState<Omit<Diary,"diaryId">>({
         title:"",
         text:"",
         date:"",
@@ -71,7 +71,7 @@ const Section = () => {
 
     return(
         <div className="w-full p-4">
-            <h2 className="font-bold text-2xl mb-4">Pet's Diary Calendar</h2>
+            <h2 className="font-bold text-2xl mb-4">Pet&apos;s Diary Calendar</h2>
             <Calendar onClickDay={handleDateClick} className="justify-center items-center"/>
 
             {showModal === "view" && selectedDate && (
