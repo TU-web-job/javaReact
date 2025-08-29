@@ -1,11 +1,15 @@
-import {useState } from "react";
+"use client";
+import dynamic from "next/dynamic";
+import { useState, useEffect } from "react";
 import { Diary } from "../../types/typeItems";
-import Calendar from 'react-calendar';
+import { toJSTDateString } from "./date";
+const Calendar = dynamic(() => import("react-calendar"), {ssr: false});
 import 'react-calendar/dist/Calendar.css';
 import Image from "next/image";
 
 const Section = () => {
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    const [formattedDate, setFormattedDate] = useState<string>("");
     const [diary, setDiary] = useState<Diary[]>([]);
     const [showModal, setShowModal] = useState<"view" | "new" | null>(null);
     const [newDiary, setNewDiary] = useState<Omit<Diary,"id">>({
@@ -15,12 +19,18 @@ const Section = () => {
         image:"",
         });
 
+    useEffect(() => {
+        if(selectedDate) {
+        setFormattedDate(new Intl.DateTimeFormat("jp-JP").format(selectedDate));
+        }
+    },[selectedDate]);
+
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
 
         const reader = new FileReader();
-        reader.onloaded = () => {
+        reader.onload = () => {
             setNewDiary({ ...newDiary, image: reader.result as string});
         };
         reader.readAsDataURL(file);
@@ -30,7 +40,7 @@ const Section = () => {
         setSelectedDate(date);
         setShowModal("view");
 
-        const res = await fetch(`/api/diary?date=${date.toISOString().split("T")[0]}`);
+        const res = await fetch(`/api/diary?date=${toJSTDateString(date)}`);
         const data = await res.json();
         setDiary(data);
     };
@@ -40,7 +50,7 @@ const Section = () => {
 
         const payload = {
             ...newDiary,
-            date: selectedDate.toISOString().split("T")[0],
+            date: toJSTDateString(selectedDate),
         };
 
         const res = await fetch("/api/diary", {
@@ -68,7 +78,7 @@ const Section = () => {
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                     <div className="bg-white p-4 rounded-md w-96">
                         <h3 className="font-bold text-xl mb-4">
-                            {selectedDate && new Intl.DateTimeFormat("ja-JP").format(selectedDate)}の日常
+                            {formattedDate}の日常
                         </h3>
 
                         {diary.length > 0 ? (

@@ -1,6 +1,7 @@
 package controller;
 
 import org.springframework.web.bind.annotation.*;
+import org.springfreamework.format.annotation.DateTimeFormat;
 import java.util.List;
 
 @RestController
@@ -15,8 +16,8 @@ public class DiaryController {
     }
 
     @GetMapping
-    public List<Diary> getByDate(@RequestParam String date){
-        return repo.findByDate(date);
+    public List<Diary> getByDate(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date){
+        return repo.findByDate(date.toString());
     }
 
     @PostMapping
