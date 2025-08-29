@@ -10,11 +10,13 @@ RUN npm run export   # out/フォルダ生成
 # 2. バックエンドのビルド
 FROM gradle:8.3-jdk17 AS backend-build
 WORKDIR /back
-COPY ./back/.gradle ./back/settings.gradle.kts ./back/gradlew ./
+# Gradle wrapper 関連ファイルのみコピー
+COPY ./back/build.gradle ./back/settings.gradle* ./back/gradlew ./
 COPY ./back/gradle ./gradle
 COPY ./back/src ./src
 # フロントの静的ファイルを Spring Boot にコピー
 COPY --from=frontend-build /front/out ./src/main/resources/static
+RUN chmod +x ./gradlew
 RUN ./gradlew clean build -x test
 
 # 3. 実行用
