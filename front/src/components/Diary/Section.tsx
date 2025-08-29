@@ -15,6 +15,17 @@ const Section = () => {
         image:"",
         });
 
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onloaded = () => {
+            setNewDiary({ ...newDiary, image: reader.result as string});
+        };
+        reader.readAsDataURL(file);
+    };
+
     const handleDateClick = async (date: Date) => {
         setSelectedDate(date);
         setShowModal("view");
@@ -62,7 +73,7 @@ const Section = () => {
 
                         {diary.length > 0 ? (
                             diary.map((item) => (
-                                <div key={item.id} className="mb-4">
+                                <div key={item.diaryId} className="mb-4">
                                     <p className="font-semibold">{item.title}</p>
                                     <p>Text : {item.text}</p>
                                     {item.image && (
@@ -109,11 +120,10 @@ const Section = () => {
                             onChange={(e) => setNewDiary({ ...newDiary, text: e.target.value})}
                         />
                         <input
-                            type="text"
-                            placeholder="Image Path"
+                            type="file"
+                            accept="image/*"
                             className="w-full border p-2 mb-2"
-                            value={newDiary.image}
-                            onChange={(e) => setNewDiary({ ...newDiary, image: e.target.value})}
+                            onChange={handleImageChange}
                         />
                         <div className="flex justify-between mt-4">
                             <button className="bg-blue-500 text-white px-4 py-2 rounded-md" onClick={handleSave}>

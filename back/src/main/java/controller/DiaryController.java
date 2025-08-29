@@ -1,8 +1,11 @@
 package controller;
 
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/diary")
-@Crossorigin(origins = "*")
+@CrossOrigin(origins = "*")
 public class DiaryController {
 
     private final DiaryRepository repo;
@@ -12,7 +15,7 @@ public class DiaryController {
     }
 
     @GetMapping
-    public List<Diary> getByDate(@RequstParam String date){
+    public List<Diary> getByDate(@RequestParam String date){
         return repo.findByDate(date);
     }
 
